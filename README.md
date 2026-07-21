@@ -149,8 +149,8 @@ about the difference between one-step accuracy and closed-loop payoff.
 ## Quickstart
 
 ```bash
-git clone https://github.com/Yiannosste/Physical-AI-Project.git
-cd Physical-AI-Project
+git clone https://github.com/Yiannosste/Physics-Residual-World-Model.git
+cd Physics-Residual-World-Model
 pip install -e ".[dev]"            # core engine + pytest
 pip install -e ".[dev,notebook]"   # + matplotlib/seaborn/jupyter for demo.ipynb
 
@@ -183,7 +183,7 @@ jupyter lab demo.ipynb
 │   │   ├── cartpole.py           ← cart-pole balancing task
 │   │   └── quadrotor2d.py        ← planar-quadrotor hover task
 │   ├── nn.py                     ← MLP with manual backprop + Adam (pure NumPy)
-│   ├── ensemble.py                ← task-agnostic residual ensemble + online_update
+│   ├── ensemble.py               ← task-agnostic residual ensemble + online_update
 │   ├── planners/
 │   │   ├── cem.py                ← uncertainty-penalised Cross-Entropy Method MPC
 │   │   └── mppi.py               ← uncertainty-penalised Model Predictive Path Integral
