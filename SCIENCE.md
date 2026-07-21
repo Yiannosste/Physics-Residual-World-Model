@@ -59,11 +59,11 @@ s_{t+1} = F^\*(s_t, a_t), \qquad F^\* \text{ unknown},
 $$
 
 from which we may sample a modest dataset of transitions
-$\mathcal{D} = \{(s_i, a_i, s'_i)\}_{i=1}^N$ collected by an exploratory
+$\mathcal{D} = \{(s_i, a_i, s_i')\}_{i=1}^N$ collected by an exploratory
 policy. The goal is receding-horizon optimal control:
 
 $$
-\min_{a_{0:H-1}} \; \mathbb{E}\left[\sum_{t=0}^{H-1} c(s_t, a_t)\right]
+\min_{a_{0:H-1}} \mathbb{E}\left[\sum_{t=0}^{H-1} c(s_t, a_t)\right]
 \quad \text{s.t.} \quad s_{t+1} = F^\*(s_t, a_t),
 $$
 
@@ -106,10 +106,10 @@ swings), and (iii) equipped with a genuinely hard reality gap. With $\theta$
 the angle from the upright equilibrium, the **true** system is
 
 $$
-m^\* \ell^{\*2} \ddot{\theta} = m^\* g \ell^\* \sin\theta
- + u - \underbrace{b\,\dot\theta}_{\text{viscous}}
- - \underbrace{c_d\,\dot\theta\,|\dot\theta|}_{\text{quadratic drag}}
- - \underbrace{\mu\,\mathrm{sgn}(\dot\theta)}_{\text{Coulomb}} ,
+m^\* \ell^{\*2} \ddot{\theta} = m^\* g \ell^\* \sin\theta +
+u - \underbrace{b \dot\theta}_{\text{viscous}} -
+\underbrace{c_d \dot\theta |\dot\theta|}_{\text{quadratic drag}} -
+\underbrace{\mu \mathrm{sgn}(\dot\theta)}_{\text{Coulomb}} ,
 \qquad |u| \le u_{\max},
 $$
 
@@ -158,14 +158,14 @@ parameters plus one or more unmodeled nonlinear force/torque terms — is the
 Rather than learning $F^\*$ from scratch, we posit the **hybrid decomposition**
 
 $$
-\hat{F}(s, a) \;=\; f_{\text{phys}}(s, a) \;+\; g_\psi(s, a),
+\hat{F}(s, a) = f_{\text{phys}}(s, a) + g_\psi(s, a),
 $$
 
 where $f_{\text{phys}}$ is the task's analytic prior and $g_\psi$ is a small
 multilayer perceptron trained on the **residual targets**
 
 $$
-r_i \;=\; s'_i - f_{\text{phys}}(s_i, a_i),
+r_i = s_i' - f_{\text{phys}}(s_i, a_i),
 $$
 
 wrapped through the prior's `wrap_state` on any circular dimension so the
@@ -246,11 +246,11 @@ using the circular mean/deviation on any dimension the task declares angular
 and the ordinary arithmetic mean/std elsewhere:
 
 $$
-d(s, a) \;=\; \sum_{j=1}^{n} \mathrm{dev}_k\!\big[\hat s^{(k)}_j(s,a)\big],
+d(s, a) = \sum_{j=1}^{n} \mathrm{dev}_k\big[\hat s^{(k)}_j(s,a)\big],
 \qquad
 \mathrm{dev}_k[\cdot] =
 \begin{cases}
-\text{circular std (via } \mathrm{atan2}\text{ of the member outputs)} & j \in \text{circular\_dims} \\
+\text{circular std (via } \mathrm{atan2}\text{ of the member outputs)} & j \in \text{circular dims} \\
 \text{ordinary std} & \text{otherwise,}
 \end{cases}
 $$
@@ -303,12 +303,12 @@ Path Integral control (Williams, Aldrich & Theodorou, 2017), an
 information-theoretic alternative to CEM's hard elite selection. Rather than
 discarding all but the top-$E$ samples, every one of the $N$ sampled
 trajectories contributes to the updated nominal sequence in proportion to
-$\exp(-\,\text{cost} / \tau)$ for a temperature $\tau$:
+$\exp(-\text{cost} / \tau)$ for a temperature $\tau$:
 
 $$
-\mu_{1:H} \;\leftarrow\; \mu_{1:H} + \sum_{n=1}^{N} w_n\, \varepsilon_n,
+\mu_{1:H} \leftarrow \mu_{1:H} + \sum_{n=1}^{N} w_n \varepsilon_n,
 \qquad
-w_n = \frac{\exp\!\big(-J_n / \tau\big)}{\sum_{n'} \exp\!\big(-J_{n'} / \tau\big)},
+w_n = \frac{\exp\big(-J_n / \tau\big)}{\sum_{n'} \exp\big(-J_{n'} / \tau\big)},
 $$
 
 where $\varepsilon_n$ is sample $n$'s (post-clipping) perturbation from the
@@ -326,8 +326,8 @@ model's ensemble-mean prediction forward and accumulating disagreement along
 the way:
 
 $$
-J(a_{0:H-1}) \;=\; \sum_{t=0}^{H-1}
-   c(\hat{s}_t, a_t) \;+\; \lambda \, d(\hat{s}_t, a_t).
+J(a_{0:H-1}) = \sum_{t=0}^{H-1}
+   c(\hat{s}_t, a_t) + \lambda d(\hat{s}_t, a_t).
 $$
 
 The penalty term implements **pessimism in the face of epistemic

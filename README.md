@@ -19,9 +19,9 @@ purely *analytic* models are systematically wrong about the real world
 research artifact:
 
 $$
-\underbrace{s_{t+1}}_{\text{prediction}}
-= \underbrace{f_{\text{phys}}(s_t, a_t)}_{\text{analytic prior (Newton, possibly wrong)}}
-+ \underbrace{g_\psi(s_t, a_t)}_{\text{learned neural residual (ensemble)}}
+\underbrace{s_{t+1}}_{\text{prediction}} =
+\underbrace{f_{\text{phys}}(s_t, a_t)}_{\text{analytic prior (Newton, possibly wrong)}} +
+\underbrace{g_\psi(s_t, a_t)}_{\text{learned neural residual (ensemble)}}
 $$
 
 A deep **ensemble** of residual networks turns the model into an epistemic
