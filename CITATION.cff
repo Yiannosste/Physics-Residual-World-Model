@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+title: "PhyRes: Physics-Residual World Models with Calibrated Epistemic Uncertainty for Safe Model-Based Control"
+type: software
+authors:
+  - family-names: Stergiou
+    given-names: Yiannos
+version: 0.2.0
+date-released: 2026-07-21
+license: MIT
+repository-code: "https://github.com/Yiannosste/Physical-AI-Project"
+keywords:
+  - physical-ai
+  - world-models
+  - residual-physics
+  - epistemic-uncertainty
+  - model-predictive-control
+  - sim-to-real
+  - benchmark-suite
+  - mppi
+  - continual-learning
