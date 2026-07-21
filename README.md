@@ -40,7 +40,7 @@ hybrid-model claims aren't an artefact of any single control problem.
 
 📖 **The full scientific background — formulation, inductive-bias arguments,
 literature, and falsifiable claims — is in [SCIENCE.md](SCIENCE.md).**
-📓 **A narrated, fully executed walkthrough on the quadrotor task is in
+📓 **A narrated, fully executed walkthrough on the pendulum task is in
 [demo.ipynb](demo.ipynb).**
 
 ---
@@ -81,8 +81,9 @@ flowchart LR
 - **Safety-flavoured planning, two ways.** `CEMPlanner` charges imagined
   trajectories for visiting uncertain regions via hard elite selection;
   `MPPIPlanner` does the same via smooth, information-theoretic trajectory
-  reweighting, giving markedly lower-jerk control signals (visible directly
-  in `demo.ipynb`). Both share one scalar risk knob, λ.
+  reweighting, giving markedly lower-jerk control signals (reproduce with
+  `experiments/run_benchmark.py --task quadrotor2d --planner mppi`). Both
+  share one scalar risk knob, λ.
 - **A genuine benchmark suite, not one task.** The engine
   (`phyres.ensemble`, `phyres.planners`) never mentions a pendulum, a
   cart-pole, or a quadrotor — it only talks to the `PhysicsPrior` /
@@ -175,7 +176,7 @@ jupyter lab demo.ipynb
 ```
 ├── README.md                     ← you are here
 ├── SCIENCE.md                    ← full scientific background & references
-├── demo.ipynb                    ← executed walkthrough: quadrotor, uncertainty heat map, MPPI
+├── demo.ipynb                    ← executed walkthrough: pendulum, uncertainty heat map, CEM
 ├── src/phyres/
 │   ├── environments/
 │   │   ├── base.py               ← PhysicsPrior / PhysicalSystem ABCs, BenchmarkTask

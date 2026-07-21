@@ -207,7 +207,10 @@ quadrotor task: the prior already predicts the roll dynamics
 the residual ensemble learns essentially zero correction there while making
 a large correction on the translational dimensions where the true drag and
 ground-effect terms live — i.e. the residual is selective, not a blanket
-correction (see `demo.ipynb`, §4).
+correction (reproduce with `experiments/run_benchmark.py --task
+quadrotor2d --planner mppi`; `demo.ipynb` §4 shows the non-selective
+opposite case on the pendulum, where misidentified mass/length and
+unmodelled friction corrupt every state dimension).
 
 ### 3.3 Relation to alternative physics priors
 
@@ -316,8 +319,9 @@ nominal sequence and $J_n$ its rolled-out cost. Because *every* sample pulls
 the mean a little rather than only a truncated elite set redefining both mean
 and variance each iteration, the resulting control sequence has markedly
 lower step-to-step jerk than CEM's — the practical motivation for offering
-both planners in the suite rather than picking one. `demo.ipynb` §6
-visualises this directly on the quadrotor's rotor-thrust commands.
+both planners in the suite rather than picking one. Reproduce this directly
+on the quadrotor's rotor-thrust commands with `experiments/run_benchmark.py
+--task quadrotor2d --planner mppi`.
 
 ### 5.3 Risk-aware objective
 
@@ -400,7 +404,7 @@ documented as a limitation below.
 The experiments (`experiments/run_swingup.py` for the original single-task
 pipeline; `experiments/run_benchmark.py --task <name> --planner
 <cem|mppi>` for any task/planner combination; `demo.ipynb` for a narrated
-walkthrough on the quadrotor) are built around four pre-registered,
+walkthrough on the pendulum) are built around four pre-registered,
 falsifiable claims, each backed by a unit test or a reported metric:
 
 - **C1 — Residual learning closes the reality gap, on every task.** The
