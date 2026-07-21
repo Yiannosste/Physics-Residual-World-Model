@@ -1,4 +1,4 @@
-# PhyRes 🌀
+# Physics-Residual World Models
 
 **A Modular Benchmark Suite of Physics-Residual World Models with Calibrated Epistemic Uncertainty for Safe Model-Based Control**
 
