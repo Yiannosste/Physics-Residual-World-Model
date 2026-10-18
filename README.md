@@ -8,12 +8,13 @@
 [![Tests](https://img.shields.io/badge/tests-pytest-brightgreen)](tests/test_phyres.py)
 [![Tasks](https://img.shields.io/badge/tasks-pendulum%20%7C%20cartpole%20%7C%20quadrotor2d-lightgrey)](src/phyres/environments)
 
-World models — internal, action-conditioned simulators an agent can plan
-against — are the backbone of today's Physical AI stack, from Dreamer-style
-model-based RL to video-generative robot foundation models. But purely
-*learned* world models are sample-hungry and physically implausible, while
-purely *analytic* models are systematically wrong about the real world
-(friction, drag, misidentified parameters — the sim-to-real gap).
+A world model is an internal, action-conditioned simulator that an agent can
+plan against. World models are the backbone of today's Physical AI stack, from
+Dreamer-style model-based RL to video-generative robot foundation models. But
+purely *learned* world models need a lot of data and often break physics.
+Purely *analytic* models need no data but are systematically wrong about the
+real world: friction, drag, misidentified parameters. This is the sim-to-real
+gap.
 
 **PhyRes** studies the hybrid middle ground as a compact, fully reproducible
 research artifact:
@@ -25,21 +26,20 @@ $$
 $$
 
 A deep **ensemble** of residual networks turns the model into an epistemic
-uncertainty estimator — it *knows what it doesn't know* — and two
-risk-aware planners, **CEM** and **MPPI**, exploit that signal to avoid plans
-that stray into poorly-modelled regions. The result is a controller that is
-certain about Newton, uncertain about friction, and pessimistic exactly where
-it should be.
+uncertainty estimator. It knows what it does not know. Two risk-aware planners,
+**CEM** and **MPPI**, use that signal to avoid plans that go into poorly
+modelled regions. The result is a controller that is certain about Newton,
+uncertain about friction, and pessimistic exactly where it should be.
 
-The engine itself is **task-agnostic**: it is written once against an
-abstract `PhysicsPrior` / `PhysicalSystem` contract
-([src/phyres/environments/base.py](src/phyres/environments/base.py)), and
-ships with three structurally different benchmark tasks — pendulum
-swing-up, cart-pole balancing, and planar-quadrotor hover — so the
-hybrid-model claims aren't an artefact of any single control problem.
+The engine is **task-agnostic**. It is written once against an abstract
+`PhysicsPrior` / `PhysicalSystem` contract
+([src/phyres/environments/base.py](src/phyres/environments/base.py)) and ships
+with three structurally different benchmark tasks: pendulum swing-up,
+cart-pole balancing and planar-quadrotor hover. So the hybrid-model claims are
+not an artefact of one control problem.
 
-📖 **The full scientific background — formulation, inductive-bias arguments,
-literature, and falsifiable claims — is in [SCIENCE.md](SCIENCE.md).**
+📖 **The full scientific background (formulation, inductive-bias arguments,
+literature and falsifiable claims) is in [SCIENCE.md](SCIENCE.md).**
 📓 **A narrated, fully executed walkthrough on the pendulum task is in
 [demo.ipynb](demo.ipynb).**
 
@@ -70,34 +70,35 @@ flowchart LR
 ## Why this is interesting
 
 - **Residual physics as inductive bias.** The network never has to relearn
-  gravity — it learns only the *reality gap* (unmodeled friction, drag,
-  cable slack, ground effect, parameter error). On held-out data this cuts
-  one-step prediction error by up to two orders of magnitude relative to the
-  analytic prior alone.
-- **Structured epistemic uncertainty.** Because all ensemble members share the
-  same physics prior, their disagreement quantifies uncertainty *about the
-  residual only* — the physically meaningful part. Out-of-distribution
-  queries provably (by unit test, on every task) trigger large disagreement.
+  gravity. It learns only the *reality gap* (unmodelled friction, drag, cable
+  slack, ground effect, parameter error). On held-out data this cuts one-step
+  prediction error by up to two orders of magnitude compared to the analytic
+  prior alone.
+- **Structured epistemic uncertainty.** All ensemble members share the same
+  physics prior, so their disagreement measures uncertainty *about the
+  residual only*, which is the physically meaningful part. Out-of-distribution
+  queries trigger large disagreement, and a unit test checks this on every
+  task.
 - **Safety-flavoured planning, two ways.** `CEMPlanner` charges imagined
-  trajectories for visiting uncertain regions via hard elite selection;
-  `MPPIPlanner` does the same via smooth, information-theoretic trajectory
-  reweighting, giving markedly lower-jerk control signals (reproduce with
-  `experiments/run_benchmark.py --task quadrotor2d --planner mppi`). Both
-  share one scalar risk knob, λ.
-- **A genuine benchmark suite, not one task.** The engine
-  (`phyres.ensemble`, `phyres.planners`) never mentions a pendulum, a
-  cart-pole, or a quadrotor — it only talks to the `PhysicsPrior` /
-  `PhysicalSystem` ABCs. Every falsifiable claim (C1, C2) is unit-tested
-  *across all three tasks*, not asserted once and hoped to generalise.
+  trajectories for visiting uncertain regions through hard elite selection.
+  `MPPIPlanner` does the same through smooth, information-theoretic trajectory
+  reweighting, which gives much lower-jerk control signals (reproduce with
+  `experiments/run_benchmark.py --task quadrotor2d --planner mppi`). Both share
+  one scalar risk knob, λ.
+- **A real benchmark suite, not one task.** The engine (`phyres.ensemble`,
+  `phyres.planners`) never mentions a pendulum, a cart-pole or a quadrotor. It
+  only talks to the `PhysicsPrior` / `PhysicalSystem` ABCs. Every falsifiable
+  claim (C1, C2) is unit-tested *across all three tasks*, not asserted once and
+  assumed to generalise.
 - **Online continual adaptation.** `ResidualEnsembleWorldModel.online_update`
   takes warm-started, replay-buffer-backed gradient steps *during* closed-loop
-  execution, tracking a slowly drifting reality gap without retraining from
+  execution. It tracks a slowly drifting reality gap without retraining from
   scratch or forgetting the offline-trained residual.
-- **Radical reproducibility.** The MLP, backpropagation, Adam, the ensemble,
-  and both planners are all implemented from scratch in pure NumPy — no
-  framework autograd, no GPU, one seed, deterministic results, minutes on a
-  laptop. (Plotting in `demo.ipynb` is the only place `matplotlib`/`seaborn`
-  appear, and they're an opt-in extra.)
+- **Reproducibility.** The MLP, backpropagation, Adam, the ensemble and both
+  planners are all implemented from scratch in pure NumPy. No framework
+  autograd, no GPU, one seed, deterministic results, minutes on a laptop.
+  (Plotting in `demo.ipynb` is the only place `matplotlib`/`seaborn` appear,
+  and they are an opt-in extra.)
 
 ## The benchmark suite
 
@@ -109,13 +110,13 @@ flowchart LR
 
 Every task exposes a matching `PhysicsPrior` / `PhysicalSystem` pair plus a
 cost function through one `make_task(name, seed)` factory
-(`src/phyres/environments/__init__.py`) — see `demo.ipynb` §1 or
+(`src/phyres/environments/__init__.py`). See `demo.ipynb` §1 or
 `experiments/run_benchmark.py` for how little code it takes to point the
 engine at a different task.
 
 ## Results
 
-All numbers below are freshly reproduced on this repository (seed 0); see
+All numbers below are freshly reproduced on this repository (seed 0). See
 *Quickstart* to regenerate them yourself.
 
 **One-step prediction (held-out transitions, RMSE):**
@@ -136,16 +137,16 @@ recovery, 150 steps, MPPI):
 | Residual, optimistic (λ=0) | 766.9 ✅ | 339.7 | 14.75 |
 | Residual, uncertainty-penalised | **766.7** ✅ | **306.5** | 14.64 |
 
-Pendulum and cart-pole show the expected ordering: the misspecified prior
-plans worse than the hybrid model, and the uncertainty penalty helps further
-on cart-pole. The quadrotor's hover-recovery task is a more forgiving,
-short-horizon *regulation* problem — MPC's frequent replanning against the
-true state largely compensates for the prior's one-step bias before it can
-compound, so despite a clear 2.5× prediction advantage the closed-loop
-numbers are close either way. **This is a genuine, reproduced finding, not
-a cherry-picked one** — see *Limitations and outlook* in
-[SCIENCE.md §7](SCIENCE.md) for why it's actually an instructive result
-about the difference between one-step accuracy and closed-loop payoff.
+Pendulum and cart-pole show the expected order: the misspecified prior plans
+worse than the hybrid model, and the uncertainty penalty helps further on
+cart-pole. The quadrotor's hover-recovery task is a more forgiving,
+short-horizon *regulation* problem. MPC replans often against the true state,
+which corrects the prior's one-step bias before it can build up. So despite a
+clear 2.5× prediction advantage, the closed-loop numbers are close either
+way. **This is a real, reproduced finding, not a cherry-picked one.** See
+*Limitations and outlook* in [SCIENCE.md §7](SCIENCE.md) for why it is an
+instructive result about the difference between one-step accuracy and
+closed-loop payoff.
 
 ## Quickstart
 
@@ -201,16 +202,16 @@ jupyter lab demo.ipynb
 The repo is organised around four pre-registered claims, each tied to a
 metric or unit test (details in [SCIENCE.md §7](SCIENCE.md)):
 
-1. **C1** — Residual learning closes the reality gap, on every task in the suite.
-2. **C2** — Ensemble disagreement detects distribution shift, on every task in the suite.
-3. **C3** — The hybrid model, not the prior, supports control on tasks that
-   require sustained, systematically correct actuation (pendulum, cart-pole);
-   the quadrotor's forgiving regulation task is an instructive counter-example.
-4. **C4** — Online continual adaptation recovers prediction accuracy under a
+1. **C1.** Residual learning closes the reality gap, on every task in the suite.
+2. **C2.** Ensemble disagreement detects distribution shift, on every task in the suite.
+3. **C3.** The hybrid model, not the prior, supports control on tasks that
+   need sustained, systematically correct actuation (pendulum, cart-pole).
+   The quadrotor's forgiving regulation task is an instructive counter-example.
+4. **C4.** Online continual adaptation recovers prediction accuracy under a
    shifted reality gap, without retraining from scratch.
 
 ## Citing
 
-See [CITATION.cff](CITATION.cff). Research code, MIT-licensed; the testbeds
-are deliberately compact — see *Limitations and outlook* in SCIENCE.md before
-extrapolating the conclusions.
+See [CITATION.cff](CITATION.cff). Research code, MIT-licensed. The testbeds
+are deliberately compact, so read *Limitations and outlook* in SCIENCE.md
+before extrapolating the conclusions.
