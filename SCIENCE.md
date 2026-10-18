@@ -55,19 +55,19 @@ We consider a discrete-time controlled dynamical system with state
 $s_t \in \mathbb{R}^n$ and action $a_t \in \mathbb{R}^m$:
 
 $$
-s_{t+1} = F^\*(s_t, a_t), \qquad F^\* \text{ unknown},
+s_{t+1} = F^\ast (s_t, a_t), \qquad F^\ast \text{ unknown},
 $$
 
 from which we can collect a modest dataset of transitions
-$\mathcal{D} = \{(s_i, a_i, s_i')\}_{i=1}^N$ using an exploratory policy. The
+$\mathcal{D} = \lbrace (s_i, a_i, s_i')\rbrace_{i=1}^N$ using an exploratory policy. The
 goal is receding-horizon optimal control:
 
 $$
 \min_{a_{0:H-1}} \mathbb{E}\left[\sum_{t=0}^{H-1} c(s_t, a_t)\right]
-\quad \text{s.t.} \quad s_{t+1} = F^\*(s_t, a_t),
+\quad \text{s.t.} \quad s_{t+1} = F^\ast (s_t, a_t),
 $$
 
-where the expectation is over model uncertainty, since $F^\*$ has to be
+where the expectation is over model uncertainty, since $F^\ast$ has to be
 replaced by a learned surrogate $\hat{F}$.
 
 ### 2.1 The abstract task contract
@@ -105,7 +105,7 @@ swings), and (iii) has a genuinely hard reality gap. With $\theta$ the angle
 from the upright equilibrium, the **true** system is
 
 $$
-m^\* \ell^{\*2} \ddot{\theta} = m^\* g \ell^\* \sin\theta +
+m^\ast \ell^{\ast 2} \ddot{\theta} = m^\ast g \ell^\ast \sin\theta +
 u - \underbrace{b \dot\theta}_{\text{viscous}} -
 \underbrace{c_d \dot\theta |\dot\theta|}_{\text{quadratic drag}} -
 \underbrace{\mu \mathrm{sgn}(\dot\theta)}_{\text{Coulomb}} ,
@@ -113,7 +113,7 @@ u - \underbrace{b \dot\theta}_{\text{viscous}} -
 $$
 
 while the **analytic prior** is the frictionless textbook model with
-*misidentified* parameters $m \ne m^\*$, $\ell \ne \ell^\*$:
+*misidentified* parameters $m \ne m^\ast$, $\ell \ne \ell^\ast$:
 $m \ell^2 \ddot{\theta} = m g \ell \sin\theta + u$.
 
 **Cart-pole balancing** (`environments/cartpole.py`) is a 4-state, 1-actuator
@@ -152,7 +152,7 @@ learning has to close.
 
 ### 3.1 Formulation
 
-Instead of learning $F^\*$ from scratch, we use the **hybrid decomposition**
+Instead of learning $F^\ast$ from scratch, we use the **hybrid decomposition**
 
 $$
 \hat{F}(s, a) = f_{\text{phys}}(s, a) + g_\psi(s, a),
@@ -179,8 +179,8 @@ al., 2021, "APHYNITY"), and simulator-gap correction (Golemo et al., 2018).
 
 ### 3.2 Why the decomposition helps: an inductive-bias argument
 
-Let $F^\* = f_{\text{phys}} + r^\*$ define the true residual. Three properties
-make $r^\*$ a strictly easier learning target than $F^\*$:
+Let $F^\ast = f_{\text{phys}} + r^\ast$ define the true residual. Three properties
+make $r^\ast$ a strictly easier learning target than $F^\ast$:
 
 - **Smaller magnitude and complexity.** The prior already covers the dominant
   terms (gravity, inertia, vacuum kinematics). What is left (friction, drag,
@@ -234,7 +234,7 @@ wrong*, which is exactly where a planner must not go.
 
 ### 4.2 Ensembles as approximate posteriors
 
-We train $K$ residual networks $\{g_{\psi_k}\}_{k=1}^K$ that differ in random
+We train $K$ residual networks $\lbrace g_{\psi_k}\rbrace_{k=1}^K$ that differ in random
 initialisation and in bootstrap resamples of $\mathcal{D}$. Deep ensembles of
 this kind are the empirically strongest practical approximation to Bayesian
 posterior predictive uncertainty at small $K$ (Lakshminarayanan et al., 2017;

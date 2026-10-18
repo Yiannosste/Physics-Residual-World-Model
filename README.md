@@ -38,9 +38,9 @@ with three structurally different benchmark tasks: pendulum swing-up,
 cart-pole balancing and planar-quadrotor hover. So the hybrid-model claims are
 not an artefact of one control problem.
 
-📖 **The full scientific background (formulation, inductive-bias arguments,
+**The full scientific background (formulation, inductive-bias arguments,
 literature and falsifiable claims) is in [SCIENCE.md](SCIENCE.md).**
-📓 **A narrated, fully executed walkthrough on the pendulum task is in
+**A narrated, fully executed walkthrough on the pendulum task is in
 [demo.ipynb](demo.ipynb).**
 
 ---
@@ -57,7 +57,7 @@ flowchart LR
         R["Residual MLP ensemble<br/>g_1 ... g_K"]
         P --> SUM(("+"))
         R --> SUM
-        R --> D["Ensemble disagreement<br/>d(s, a) — epistemic uncertainty"]
+        R --> D["Ensemble disagreement<br/>d(s, a): epistemic uncertainty"]
     end
     SUM --> PL["CEM or MPPI planner<br/>cost + λ · d(s, a)"]
     D --> PL
@@ -133,9 +133,9 @@ recovery, 150 steps, MPPI):
 
 | Planner variant | `pendulum` cost ↓ | `cartpole` cost ↓ | `quadrotor2d` cost ↓ |
 |---|---|---|---|
-| Prior only (λ=0, no learning) | 2104.4 ❌ (never swings up) | 365.9 | 14.28 |
-| Residual, optimistic (λ=0) | 766.9 ✅ | 339.7 | 14.75 |
-| Residual, uncertainty-penalised | **766.7** ✅ | **306.5** | 14.64 |
+| Prior only (λ=0, no learning) | 2104.4 (never swings up) | 365.9 | 14.28 |
+| Residual, optimistic (λ=0) | 766.9 (swings up) | 339.7 | 14.75 |
+| Residual, uncertainty-penalised | **766.7** (swings up) | **306.5** | 14.64 |
 
 Pendulum and cart-pole show the expected order: the misspecified prior plans
 worse than the hybrid model, and the uncertainty penalty helps further on
@@ -194,7 +194,7 @@ jupyter lab demo.ipynb
 │   ├── run_swingup.py            ← original single-task pendulum experiment
 │   └── run_benchmark.py          ← generic runner: any task x any planner x online adaptation
 └── tests/
-    └── test_phyres.py            ← physics, learning, uncertainty, planning, adaptation — all tasks
+    └── test_phyres.py            ← physics, learning, uncertainty, planning, adaptation: all tasks
 ```
 
 ## Falsifiable claims
