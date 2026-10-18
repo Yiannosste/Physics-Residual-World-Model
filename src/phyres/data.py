@@ -30,7 +30,7 @@ def collect_random_rollouts(
     physically sensible operating point (e.g. hover thrust for a quadrotor,
     where the bound midpoint is a poor exploration centre and the full
     bound range is a torque-violent one) instead of the bare action bounds
-    -- see :attr:`~phyres.environments.base.BenchmarkTask.explore_center`.
+    (see :attr:`~phyres.environments.base.BenchmarkTask.explore_center`).
 
     Returns arrays of shape (N, state_dim), (N, action_dim), (N, state_dim).
     """

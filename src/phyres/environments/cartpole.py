@@ -1,4 +1,4 @@
-"""Cart-pole balancing -- the second PhyRes benchmark task.
+"""Cart-pole balancing: the second PhyRes benchmark task.
 
 State convention: ``s = (x, x_dot, theta, theta_dot)`` where ``x`` is the
 cart position, and ``theta`` is the pole angle from the *upright* (unstable)
@@ -6,7 +6,7 @@ equilibrium, so ``theta = 0`` is the balanced state. Actions are a scalar
 horizontal force applied to the cart.
 
 ``CartPolePrior`` integrates the textbook rigid-body cart-pole equations
-(Florian, 2007) with no friction of any kind -- the standard idealisation
+(Florian, 2007) with no friction of any kind, the standard idealisation
 used in most control-theory derivations. ``CartPoleSystem`` is the "real
 world": it adds track (Coulomb + viscous) friction on the cart and a
 dead-zone on the transmitted force that models cable slack / backlash in

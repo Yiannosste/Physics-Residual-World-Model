@@ -3,13 +3,13 @@
 A benchmark task is defined by a pair of objects that share a state/action
 convention:
 
-* :class:`PhysicsPrior` -- a stateless, batched, analytic (and deliberately
+* :class:`PhysicsPrior`: a stateless, batched, analytic (and deliberately
   misspecified) model ``f_phys(s, a)`` that predicts the next state. This is
   the physics prior the hybrid world model builds a residual on top of
   (:mod:`phyres.ensemble`), and it is also what the CEM / MPPI planners roll
   forward when simulating candidate trajectories
   (:mod:`phyres.planners`).
-* :class:`PhysicalSystem` -- a stateful "real world" simulator that owns the
+* :class:`PhysicalSystem`: a stateful "real world" simulator that owns the
   current state and advances it with :meth:`~PhysicalSystem.step`,
   incorporating whatever unmodeled phenomena (friction, drag, ground
   effect, ...) make it differ from the prior. This is the reality gap the
@@ -18,7 +18,7 @@ convention:
 Concrete tasks (:mod:`phyres.environments.pendulum`,
 :mod:`phyres.environments.cartpole`, :mod:`phyres.environments.quadrotor2d`)
 implement both halves plus a task cost function and are otherwise opaque to
-the rest of the engine -- :mod:`phyres.ensemble` and :mod:`phyres.planners`
+the rest of the engine. :mod:`phyres.ensemble` and :mod:`phyres.planners`
 only ever talk to these two ABCs, which is what makes the engine
 task-agnostic.
 """

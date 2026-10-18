@@ -3,7 +3,7 @@
 This is the original, single-task PhyRes experiment, preserved for
 backward-compatible reproduction of the README's headline numbers. It is a
 thin, pendulum-specific instantiation of the task-agnostic pipeline in
-``run_benchmark.py`` -- see that script (or ``demo.ipynb``) for the same
+``run_benchmark.py``. See that script (or ``demo.ipynb``) for the same
 pipeline running on the cart-pole and planar-quadrotor benchmark tasks, and
 for the MPPI planner.
 

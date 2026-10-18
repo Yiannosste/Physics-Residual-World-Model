@@ -4,8 +4,8 @@ The world model predicts
 
     s_{t+1} = f_phys(s_t, a_t)  +  g_psi(s_t, a_t),
 
-where ``f_phys`` is an analytic (possibly misspecified) prior -- any
-:class:`phyres.environments.base.PhysicsPrior` -- and ``g_psi`` is a small
+where ``f_phys`` is an analytic (possibly misspecified) prior (any
+:class:`phyres.environments.base.PhysicsPrior`) and ``g_psi`` is a small
 MLP trained on the *residual* between observed transitions and the prior's
 prediction. An ensemble of K independently initialised and bootstrapped
 residual networks provides an epistemic-uncertainty estimate via prediction
@@ -22,7 +22,7 @@ Angular state dimensions are lifted to (sin, cos) features by the prior's
 warm-started continual adaptation: transitions observed while the planner
 is executing in the real world are pushed into a rolling replay buffer, and
 a handful of low-learning-rate Adam steps (reusing each member's existing
-optimiser state) are taken against a sample of that buffer -- letting the
+optimiser state) are taken against a sample of that buffer. This lets the
 residual track a slowly drifting reality gap without retraining from
 scratch.
 """
@@ -119,7 +119,7 @@ class ResidualEnsembleWorldModel:
         buffer (including the new one) and takes ``epochs`` low-learning-rate
         Adam steps on every ensemble member. Because :meth:`phyres.nn.MLP.fit`
         keeps its Adam moment estimates between calls, this is a warm start,
-        not a restart -- exactly the "lightweight" adaptation needed to track
+        not a restart. This is exactly the "lightweight" adaptation needed to track
         a slowly drifting reality gap during closed-loop execution without
         catastrophically forgetting the offline-trained residual.
 

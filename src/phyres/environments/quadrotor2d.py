@@ -1,4 +1,4 @@
-"""Planar (2D) quadrotor hover -- the third PhyRes benchmark task.
+"""Planar (2D) quadrotor hover: the third PhyRes benchmark task.
 
 State convention: ``s = (x, y, phi, x_dot, y_dot, phi_dot)`` with ``x, y``
 the position of the vehicle's centre of mass, ``phi`` the roll angle
@@ -12,7 +12,7 @@ acting through the vehicle's centre of mass, no aerodynamic interaction with
 the surrounding air. ``Quadrotor2DSystem`` is the "real world": it adds
 quadratic aerodynamic drag on both translational velocities and a
 *ground-effect* lift boost that grows sharply as the vehicle approaches the
-floor (``y -> 0``) -- a well known, strongly nonlinear near-ground
+floor (``y -> 0``), a well known, strongly nonlinear near-ground
 phenomenon that a vacuum-kinematics prior cannot represent at all. A simple
 floor contact clamp prevents the true system's state from going through the
 ground during exploration.
@@ -100,7 +100,7 @@ class Quadrotor2DSystem(PhysicalSystem):
     * a ground-effect multiplier on total thrust that grows the closer the
       vehicle gets to the floor (``exp(-y / ground_effect_height)``),
     * a compliant (spring-damper) floor contact force that activates on
-      penetration (``y < 0``) -- smooth and continuous rather than an
+      penetration (``y < 0``). It is smooth and continuous rather than an
       instantaneous velocity clamp, so it is (like Coulomb friction
       elsewhere in this repo) a strong but learnable nonlinearity.
     """
@@ -170,7 +170,7 @@ class Quadrotor2DSystem(PhysicalSystem):
         drag_y = self.drag_coeff * y_dot * np.abs(y_dot)
 
         # Compliant floor contact: a spring-damper force that only acts on
-        # penetration (y < 0), continuous in y and y_dot -- unlike a hard
+        # penetration (y < 0), continuous in y and y_dot. Unlike a hard
         # position/velocity clamp, this never introduces a state
         # discontinuity, so it remains a learnable residual just like the
         # other unmodeled forces here.

@@ -10,7 +10,7 @@ cost is
 where ``d`` is the ensemble disagreement from
 :class:`phyres.ensemble.ResidualEnsembleWorldModel`. The penalty term
 steers the optimiser away from state-action regions where the model family
-disagrees with itself -- i.e. regions outside the training distribution --
+disagrees with itself (regions outside the training distribution),
 which is the mechanism that makes model-based control *risk-aware* rather
 than merely optimistic (cf. pessimistic MPC / conservative model-based RL).
 
@@ -90,7 +90,7 @@ class CEMPlanner:
         else:  # shift previous solution one step, pad with the nominal action
             mean = np.vstack([self._warm_mean[1:], self.init_mean[None, :]])
         # Quarter of the full action range == 0.5 * u_max for the original
-        # symmetric [-u_max, u_max] pendulum bounds -- preserved here so
+        # symmetric [-u_max, u_max] pendulum bounds. Preserved here so
         # generalising to per-dimension bounds doesn't silently double the
         # sampling variance (and with it, the planner's behaviour).
         std = np.tile(0.25 * (self.action_high - self.action_low), (h, 1))

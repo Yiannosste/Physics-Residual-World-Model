@@ -1,11 +1,11 @@
 """Uncertainty-penalised Model Predictive Path Integral (MPPI) control.
 
-MPPI (Williams, Aldrich & Theodorou, 2017 -- "Information Theoretic MPC for
+MPPI (Williams, Aldrich & Theodorou, 2017, "Information Theoretic MPC for
 Model-Based Reinforcement Learning") replaces CEM's hard elite-selection
 with a *soft*, information-theoretic reweighting of every sampled
 trajectory: each of the ``N`` sampled action sequences contributes to the
 next nominal sequence in proportion to ``exp(-cost / temperature)``. Because
-every sample -- not just the top few -- pulls the mean a little, the
+every sample (not just the top few) pulls the mean a little, the
 resulting control sequence is markedly smoother (lower jerk) than CEM's,
 which recomputes mean and standard deviation purely from a truncated elite
 set each iteration.
@@ -15,7 +15,7 @@ The planning cost is identical to :class:`phyres.planners.cem.CEMPlanner`'s:
     J(a_{0:H}) = sum_t c(s_t, a_t)  +  lambda_u * sum_t d(s_t, a_t),
 
 so the same ensemble disagreement signal that makes CEM risk-aware also
-makes MPPI risk-aware -- trajectories that pass through poorly-modelled
+makes MPPI risk-aware: trajectories that pass through poorly-modelled
 regions are still charged extra and therefore down-weighted in the softmax.
 """
 

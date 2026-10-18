@@ -13,7 +13,7 @@ Pipeline
 4. Report one-step model error and closed-loop control cost.
 
 This is the task-agnostic counterpart of ``run_swingup.py``: the pipeline
-itself never mentions pendulums, cart-poles or quadrotors -- it only talks
+itself never mentions pendulums, cart-poles or quadrotors. It only talks
 to the :class:`~phyres.environments.base.PhysicsPrior` /
 :class:`~phyres.environments.base.PhysicalSystem` interface, so any task
 registered in :data:`phyres.environments.TASKS` runs through it unchanged.

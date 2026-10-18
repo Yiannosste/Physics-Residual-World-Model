@@ -1,8 +1,8 @@
-"""Pendulum swing-up -- the original PhyRes benchmark task.
+"""Pendulum swing-up: the original PhyRes benchmark task.
 
 The central object of study is the *reality gap*: the analytic prior
 ``PendulumPrior`` is a textbook rigid-body model with (deliberately)
-misspecified parameters, while ``PendulumSystem`` is the "real world" -- it
+misspecified parameters, while ``PendulumSystem`` is the "real world". It
 integrates the same rigid-body core but adds unmodeled phenomena (quadratic
 aerodynamic drag, dry Coulomb friction, actuator saturation and a parameter
 offset). The learned residual in :mod:`phyres.ensemble` must absorb exactly

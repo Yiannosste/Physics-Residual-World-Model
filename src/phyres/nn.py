@@ -1,7 +1,7 @@
 """A minimal multilayer perceptron with manual backpropagation and Adam.
 
 Implemented in pure NumPy so that the entire research pipeline is
-dependency-free, deterministic under a seed, and auditable line by line —
+dependency-free, deterministic under a seed, and auditable line by line:
 there is no framework autograd to hide the mathematics. The network is a
 tanh MLP trained with mean-squared error, which is all a residual dynamics
 model needs.
