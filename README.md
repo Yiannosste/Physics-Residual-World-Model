@@ -47,25 +47,9 @@ literature and falsifiable claims) is in [SCIENCE.md](SCIENCE.md).**
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph TASK["Any BenchmarkTask (pendulum / cartpole / quadrotor2d / ...)"]
-        P["Analytic physics prior<br/>f_phys (misspecified)"]
-        ENV["True system<br/>(friction, drag, ground effect, ...)"]
-    end
-    subgraph WM["Task-agnostic hybrid world model"]
-        R["Residual MLP ensemble<br/>g_1 ... g_K"]
-        P --> SUM(("+"))
-        R --> SUM
-        R --> D["Ensemble disagreement<br/>d(s, a): epistemic uncertainty"]
-    end
-    SUM --> PL["CEM or MPPI planner<br/>cost + λ · d(s, a)"]
-    D --> PL
-    PL -- "first action u₀" --> ENV
-    ENV -- "observed transitions" --> R
-    ENV -- "state s" --> PL
-    ENV -. "online_update()<br/>warm-started replay" .-> R
-```
+![PhyRes architecture: a benchmark task provides a misspecified analytic prior and the true system; a residual MLP ensemble adds a learned correction to the prior and its disagreement gives the epistemic uncertainty; a CEM or MPPI planner minimises cost plus lambda times disagreement, applies the first action to the true system, and the observed transitions feed the ensemble, including warm-started online updates](docs/architecture.png)
+
+*Architecture overview. Editable source: [`docs/architecture.svg`](docs/architecture.svg).*
 
 ## Why this is interesting
 

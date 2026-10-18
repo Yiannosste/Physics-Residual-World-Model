@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="Inter, 'DejaVu Sans', sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#111827"/></marker></defs>
+<rect width="1200" height="760" fill="white"/>
+<rect x="70" y="125" width="310" height="520" rx="14" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-dasharray="8 6"/>
+<text x="86" y="149" font-size="14" font-weight="700" fill="#4B5563" letter-spacing="0.4">ANY BenchmarkTask</text>
+<text x="86" y="169" font-size="13" fill="#4B5563">(pendulum / cartpole / quadrotor2d / ...)</text>
+<rect x="420" y="125" width="440" height="440" rx="14" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-dasharray="8 6"/>
+<text x="436" y="149" font-size="14" font-weight="700" fill="#4B5563" letter-spacing="0.4"></text>
+<text x="640" y="550" text-anchor="middle" font-size="14" font-weight="700" fill="#4B5563" letter-spacing="0.4">TASK-AGNOSTIC HYBRID WORLD MODEL</text>
+<rect x="90" y="255" width="270" height="115" rx="10" fill="#E7F5EC" stroke="#1F7A3F" stroke-width="2"/>
+<text x="225.0" y="283" text-anchor="middle" font-weight="700" font-size="17" fill="#111827">Analytic physics prior</text>
+<text x="225.0" y="314" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">f<tspan baseline-shift="sub" font-size="72%">phys</tspan>(s, a)</text>
+<text x="225.0" y="335" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">Newton, deliberately misspecified</text>
+<rect x="90" y="485" width="270" height="115" rx="10" fill="#F3F4F6" stroke="#374151" stroke-width="2"/>
+<text x="225.0" y="513" text-anchor="middle" font-weight="700" font-size="17" fill="#111827">True system</text>
+<text x="225.0" y="544" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">friction, drag, ground effect, ...</text>
+<text x="225.0" y="565" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">(the reality gap)</text>
+<rect x="440" y="160" width="300" height="100" rx="10" fill="#E8F0FE" stroke="#1D4ED8" stroke-width="2"/>
+<text x="590.0" y="188" text-anchor="middle" font-weight="700" font-size="17" fill="#111827">Residual MLP ensemble</text>
+<text x="590.0" y="217" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">g<tspan baseline-shift="sub" font-size="72%">1</tspan> … g<tspan baseline-shift="sub" font-size="72%">K</tspan></text>
+<text x="590.0" y="236" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">trained on  s′ − f<tspan baseline-shift="sub" font-size="72%">phys</tspan>(s, a)</text>
+<circle cx="810" cy="210" r="26" fill="white" stroke="#111827" stroke-width="2.2"/>
+<text x="810" y="219" text-anchor="middle" font-size="26" font-weight="700" fill="#111827">+</text>
+<rect x="440" y="400" width="300" height="105" rx="10" fill="#E8F0FE" stroke="#1D4ED8" stroke-width="2"/>
+<text x="590.0" y="428" text-anchor="middle" font-weight="700" font-size="17" fill="#111827">Ensemble disagreement</text>
+<text x="590.0" y="457" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">d(s, a)</text>
+<text x="590.0" y="476" text-anchor="middle" font-size="14.5" font-weight="400" fill="#4B5563">epistemic uncertainty</text>
+<rect x="900" y="140" width="270" height="145" rx="10" fill="#FFF1E6" stroke="#C2410C" stroke-width="2"/>
+<text x="1035.0" y="168" text-anchor="middle" font-weight="700" font-size="17" fill="#111827">CEM or MPPI planner</text>
+<text x="1035.0" y="199" text-anchor="middle" font-size="13.5" font-weight="400" fill="#4B5563">minimise over a<tspan baseline-shift="sub" font-size="72%">0:H−1</tspan>:</text>
+<text x="1035.0" y="220" text-anchor="middle" font-size="13.5" font-weight="400" fill="#4B5563">Σ<tspan baseline-shift="sub" font-size="72%">t</tspan> cost(ŝ<tspan baseline-shift="sub" font-size="72%">t</tspan>, a<tspan baseline-shift="sub" font-size="72%">t</tspan>) + λ · d(ŝ<tspan baseline-shift="sub" font-size="72%">t</tspan>, a<tspan baseline-shift="sub" font-size="72%">t</tspan>)</text>
+<text x="1035.0" y="241" text-anchor="middle" font-size="13.5" font-weight="400" fill="#4B5563">one scalar risk knob λ</text>
+<path d="M 360,312 L 810,312 L 810,238" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="642.42" y="290.5" width="95.16000000000001" height="21.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="690" y="303" text-anchor="middle" font-size="13.5" font-weight="500" fill="#111827" font-style="italic">f<tspan baseline-shift="sub" font-size="72%">phys</tspan>(s, a)</text>
+<path d="M 740,210 L 782,210" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="727.0" y="185.5" width="68.0" height="20.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="761" y="197" text-anchor="middle" font-size="12.5" font-weight="500" fill="#111827" font-style="italic">g<tspan baseline-shift="sub" font-size="72%">ψ</tspan>(s, a)</text>
+<path d="M 836,210 L 898,210" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="847.0" y="185.5" width="40.0" height="20.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="867" y="197" text-anchor="middle" font-size="12.5" font-weight="500" fill="#111827" font-style="italic">ŝ<tspan baseline-shift="sub" font-size="72%">t+1</tspan></text>
+<path d="M 520,260 L 520,398" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="433.5" y="325.5" width="173.00000000000003" height="20.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="520" y="337" text-anchor="middle" font-size="12.5" font-weight="500" fill="#111827" font-style="italic">spread of the K members</text>
+<path d="M 740,452 L 990,452 L 990,287" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="837.54" y="430.5" width="64.92" height="21.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="870" y="443" text-anchor="middle" font-size="13.5" font-weight="500" fill="#111827" font-style="italic">d(s, a)</text>
+<path d="M 360,585 L 1080,585 L 1080,287" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="687.54" y="563.5" width="64.92" height="21.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="720" y="576" text-anchor="middle" font-size="13.5" font-weight="500" fill="#111827" font-style="italic">state s</text>
+<path d="M 1150,285 L 1150,690 L 225,690 L 225,602" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="617.3" y="668.5" width="125.4" height="21.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="680" y="681" text-anchor="middle" font-size="13.5" font-weight="500" fill="#111827" font-style="italic">first action u<tspan baseline-shift="sub" font-size="72%">0</tspan></text>
+<path d="M 90,540 L 16,540 L 16,56 L 580,56 L 580,158" fill="none" stroke="#111827" stroke-width="2.2" marker-end="url(#arrow)" stroke-linejoin="round"/>
+<rect x="176.82" y="34.5" width="246.36" height="21.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="300" y="47" text-anchor="middle" font-size="13.5" font-weight="500" fill="#111827" font-style="italic">observed transitions (s, a, s′)</text>
+<path d="M 90,565 L 42,565 L 42,88 L 660,88 L 660,158" fill="none" stroke="#6B7280" stroke-width="2.2" marker-end="url(#arrow)" stroke-dasharray="8 6" stroke-linejoin="round"/>
+<rect x="84.75999999999999" y="96.5" width="450.48" height="21.5" rx="4" fill="white" fill-opacity="0.92"/>
+<text x="310" y="109" text-anchor="middle" font-size="13.5" font-weight="500" fill="#374151" font-style="italic">online_update(): warm-started replay steps during execution</text>
+</svg>
